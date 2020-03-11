@@ -4,6 +4,7 @@
 
 # Att göra:
 	Allt
+	=
 
 
 
