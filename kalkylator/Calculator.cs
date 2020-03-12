@@ -12,15 +12,44 @@ namespace kalkylator
         public double result = 0;
         public double operand = 0;
         public char prevOperator = new char();
+        public string latestPress = "";
+        public double temp = 0;
 
         public void equals()
         {
             Console.WriteLine(result + " " + prevOperator + " " + operand);
-            double temp = result;
-            if (prevOperator == '*')
-                result = operand * result;
+            if (latestPress != "eq")
+            {
+                temp = result;
+                result = operand;
+                operand = temp;
+                Console.WriteLine("temp = result");
+            }
+            //double temp = result;
+            //temp = result;
 
-            //operand = temp;
+            Console.WriteLine(result + " " + prevOperator + " " + operand);
+
+
+            switch (prevOperator)
+            {
+                case '*':
+                    result *= operand;// * result;
+                    break;
+                case '+':
+                    result += operand;// + result;
+                    break;
+                case '-':
+                    result -= operand;// - result;
+                    break;
+                case '/':
+                    result /= operand;// / result;
+                    break;
+
+            }
+
+            latestPress = "eq";
+            
         }
 
         public void operate()
@@ -33,11 +62,44 @@ namespace kalkylator
             //1 + 1 +2 -3s
             Console.WriteLine(result + " " + prevOperator + " " + operand);
 
-            prevOperator = op;
-            operand = result;
-            result = 0;
-            equals();
 
+            if (latestPress == "op")
+            {
+                equals();
+                //skriv result nu
+                
+                prevOperator = op;
+                operand = result;
+                result = 0;
+                Console.WriteLine(result);
+            }
+            else
+            {
+                prevOperator = op;
+                operand = result;
+                result = 0;
+            }
+            latestPress = "op";
+            /*
+            Console.WriteLine(numberCalc2 + " " + numberString2);
+            if (operattor == "None")
+                operattor = op;
+
+
+            if (numberString2 != "" && numberString2 != "0")
+            {
+                equals();
+                updateNumber2Display();
+                updateDisplay();
+            }
+
+            operattor = op;
+
+            numberString2 = numberString1;
+            numberString1 = "0";
+            updateNumber2Display();
+
+    */
         }
 
         public void clearAll()

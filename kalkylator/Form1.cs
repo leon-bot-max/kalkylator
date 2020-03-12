@@ -62,7 +62,7 @@ namespace kalkylator
         {
 
 
-            
+
 
             Button senderButton = (Button)sender;
 
@@ -84,6 +84,9 @@ namespace kalkylator
                     nyttTal(",");
                     updateDisplay();
                     Console.WriteLine(resultString);
+                    updateDisplay();
+                    updateNumber2Display();
+                    return;
                 }
             }
             else if (sender == buttonPlus)
@@ -108,6 +111,10 @@ namespace kalkylator
                 calc.equals();
                 konverteraTillString();
                 updateDisplay();
+                updateNumber2Display();
+                resultString = "0";
+                return;
+                
             }
             konverteraTillString();
             //updateDisplay();
@@ -201,26 +208,49 @@ namespace kalkylator
             }*/
             resultString = calc.result.ToString();
             operandString = calc.operand.ToString();
+            Console.WriteLine("Till string");
 
-        } 
+        }
+
+
+        private void koverteraTillResult()
+        {
+            if (resultString[resultString.Length - 1] == ',')
+            {
+                Console.WriteLine(resultString + "  --<-<- resultString innan +0");
+                string r = resultString + "0";
+                calc.result = double.Parse(r);
+                Console.WriteLine("Efter parse: " + double.Parse(r));
+            }
+            else
+                calc.result = double.Parse(resultString);
+
+
+
+        }
         private void nyttTal(string tal)
         {
-            
+            Console.WriteLine("1.:; " + resultString);
+            if (tal == "," && resultString == "")
+            {
+
+                resultString += "0" + tal;
+                koverteraTillResult();
+                return;
+
+            }
 
             if (resultString == "0")
             {
-                if (tal == ",")
-                {
-                    resultString += tal;
-                    calc.result = double.Parse(resultString);
-                    return;
-                }
+
                 resultString = tal;
-                calc.result = double.Parse(resultString);
+                koverteraTillResult();
                 return;
             }
             resultString += tal;
-            calc.result = double.Parse(resultString);
+            Console.WriteLine(resultString);
+            koverteraTillResult();
+            Console.WriteLine("r" + calc.result);
 
         }
         private void raderaTal()
@@ -237,7 +267,7 @@ namespace kalkylator
                 newNumberString = "0";
             }
             resultString = newNumberString;
-            calc.result = double.Parse(resultString);
+            koverteraTillResult();
 
             updateDisplay();
             updateNumber2Display();
