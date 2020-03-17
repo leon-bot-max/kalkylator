@@ -52,6 +52,15 @@ namespace kalkylator
         private void numberButtonListener(object sender, EventArgs e)
         {
             //latestPressEqual = false;
+            if (calc.latestPress == "eq")   //Ta väck nuvarande operator
+            {
+                Console.WriteLine("eq was katest");
+                calc.prevOperator = new char();
+                calc.operand = 0;
+            }
+
+
+            //calc.latestPress = "num";
             Button senderButton = (Button)sender;
             nyttTal(senderButton.Text);
             updateDisplay();
@@ -116,7 +125,34 @@ namespace kalkylator
                 return;
                 
             }
+            else if (sender == buttonC) //Clear all
+            {
+                calc.clearAll();
+                konverteraTillString();
+                updateDisplay();
+                updateNumber2Display();
+            }
+            else if (sender == buttonCE) //Clear det du skriver på nu
+            {
+                calc.clearEntry();
+                konverteraTillString();
+                updateDisplay();
+                updateNumber2Display();
+            }
+            else if (sender == buttonInverse)
+            {
+                calc.inverse();
+                konverteraTillString();
+                updateDisplay();
+                updateNumber2Display();
+            }
             konverteraTillString();
+            if (calc.updateDisplayOperand)
+            {
+                Console.WriteLine("calc.update " + calc.result + " operand: " + calc.operand);
+                updateDisplay(true);
+                calc.updateDisplayOperand = false;
+            }
             //updateDisplay();
             updateNumber2Display();
 
@@ -230,7 +266,6 @@ namespace kalkylator
         }
         private void nyttTal(string tal)
         {
-            Console.WriteLine("1.:; " + resultString);
             if (tal == "," && resultString == "")
             {
 
@@ -248,9 +283,7 @@ namespace kalkylator
                 return;
             }
             resultString += tal;
-            Console.WriteLine(resultString);
             koverteraTillResult();
-            Console.WriteLine("r" + calc.result);
 
         }
         private void raderaTal()
@@ -277,10 +310,23 @@ namespace kalkylator
 
         }
 
-        private void updateDisplay()
+        private void updateDisplay(bool withOperand = false)
         {
+            string attSkriva = resultString;
+            if (withOperand)
+            {
+                attSkriva = operandString;
+            }
 
-            display.Text = resultString;
+            if (calc.error == true)
+            {
+                Console.WriteLine("Error found");
+                display.Text = "Fel";
+                display.SelectionAlignment = HorizontalAlignment.Right;
+                calc.clearAll();
+                return;
+            }
+            display.Text = attSkriva;
             display.SelectionAlignment = HorizontalAlignment.Right;
 
         }
