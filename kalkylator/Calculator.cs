@@ -12,15 +12,13 @@ namespace kalkylator
         public double result = 0;
         public double operand = 0;
         public char prevOperator = new char();
-        public string latestPress = ""; //eq = equal, op = operator, num = number
+        public string latestPress = "";
         public double temp = 0;
 
-        public bool error = false;
-        public bool updateDisplayOperand = false;
         public void equals()
         {
             Console.WriteLine(result + " " + prevOperator + " " + operand);
-            if (latestPress != "eq" && prevOperator != new char())
+            if (latestPress != "eq")
             {
                 temp = result;
                 result = operand;
@@ -45,21 +43,12 @@ namespace kalkylator
                     result -= operand;// - result;
                     break;
                 case '/':
-                    if (operand == 0)
-                    {
-                        Console.WriteLine("Div by zero");
-                        error = true;
-                    }
-                    else
-                    {
-                        result /= operand;// / result;
-                    }
+                    result /= operand;// / result;
                     break;
 
             }
 
             latestPress = "eq";
-            
             
         }
 
@@ -77,9 +66,8 @@ namespace kalkylator
             if (latestPress == "op")
             {
                 equals();
-                updateDisplayOperand = true;
                 //skriv result nu
-
+                
                 prevOperator = op;
                 operand = result;
                 result = 0;
@@ -116,29 +104,7 @@ namespace kalkylator
 
         public void clearAll()
         {
-            result = 0;
-            operand = 0;
-            prevOperator = new char();
-            latestPress = "";
-            temp = 0;
-            error = false;
 
-        }
-
-        public void clearEntry()
-        {
-            result = 0;
-        }
-        public void inverse()
-        {
-            if (result != 0)
-            {
-                result = 1 / result;
-            }
-            else
-            {
-                error = true;
-            }
         }
 
 
