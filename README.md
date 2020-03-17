@@ -3,8 +3,7 @@
 
 
 # Att göra:
-	Allt
-	=
+	fler funktions knappar
 
 
 
