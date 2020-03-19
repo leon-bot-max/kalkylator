@@ -146,6 +146,26 @@ namespace kalkylator
                 updateDisplay();
                 updateNumber2Display();
             }
+            else if (sender == buttonProcent)
+            {
+                calc.procent();
+                konverteraTillString();
+                updateDisplay();
+            }
+            else if (sender == buttonPlusMinus)
+            {
+                calc.teckenByte();
+                konverteraTillString();
+
+                updateDisplay();
+            }
+            else if (sender == buttonSqrt)
+            {
+                calc.sqrt();
+                konverteraTillString();
+
+                updateDisplay();
+            }
             konverteraTillString();
             if (calc.updateDisplayOperand)
             {
@@ -153,95 +173,15 @@ namespace kalkylator
                 updateDisplay(true);
                 calc.updateDisplayOperand = false;
             }
+
             //updateDisplay();
             updateNumber2Display();
 
         }
-        /*
-
-        private void equals()
-        {
-            konverteraTillDouble();
-
-            Console.WriteLine(numberCalc2 + " " + numberCalc1 + " " + operattor + " " + latestPressEqual);
-            if (latestPressEqual)
-            {
-                numberCalc2 = latestNumber;
-            }
-            if (operattor == "+")
-                numberCalc2 += numberCalc1;
-            else if (operattor == "-")
-                numberCalc2 -= numberCalc1;
-            else if (operattor == "*")
-                numberCalc2 *= numberCalc1;
-            else if (operattor == "/")
-                numberCalc2 /= numberCalc1;
-
-
-            //Trycker lika med 2 ggr ger problem
-
-            double temp = numberCalc1;
-            numberCalc1 = numberCalc2;
-            if (!latestPressEqual)
-            {
-                latestNumber = temp;
-            }
-            //numberCalc2 = 0;
-            //numberString2 = "";
-            latestPressEqual = true;
-
-            konverteraTillString();
-
-        }
-
-
-        private void operationPressed(string op)
-        {
-
-            Console.WriteLine(numberCalc2 + " " + numberString2);
-            if (operattor == "None") 
-                operattor = op;
-
-
-            if (numberString2 != "" && numberString2 != "0")
-            {
-                equals();
-                updateNumber2Display();
-                updateDisplay();
-            }
-
-            operattor = op;
-
-            numberString2 = numberString1;
-            numberString1 = "0";
-            updateNumber2Display();
-
-
-            
-        }
-
-
-        private void plus()
-        {
-            Console.Beep();
-
-        }
-       
-        private void konverteraTillDouble()
-        {
-            Console.WriteLine(numberString2);
-            numberCalc1 = Convert.ToDouble(numberString1);
-            numberCalc2 = Convert.ToDouble(numberString2);
-        }*/
+ 
         private void konverteraTillString()
         {
-            /*
-            numberString1 = numberCalc1.ToString();
-            numberString2 = numberCalc2.ToString();
-            if (numberString2 == "0")
-            {
-                numberString2 = "";
-            }*/
+            
             resultString = calc.result.ToString();
             operandString = calc.operand.ToString();
             Console.WriteLine("Till string");

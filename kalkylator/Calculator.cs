@@ -141,8 +141,27 @@ namespace kalkylator
             }
         }
 
+        public void procent()
+        {
+            result /= 100;
+        }
 
 
+        public void sqrt()
+        {
+            if (result < 0)
+            {
+                error = true;
+                return;
+            }
+            result = Math.Sqrt(result);
+        }
+
+
+        public void teckenByte()
+        {
+            result *= -1;
+        }
 
 
 
