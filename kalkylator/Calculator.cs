@@ -27,8 +27,7 @@ namespace kalkylator
                 operand = temp;
                 Console.WriteLine("temp = result");
             }
-            //double temp = result;
-            //temp = result;
+
 
             Console.WriteLine(result + " " + prevOperator + " " + operand);
 
@@ -74,44 +73,24 @@ namespace kalkylator
             Console.WriteLine(result + " " + prevOperator + " " + operand);
 
 
-            if (latestPress == "op")
+            if (latestPress == "op") // inte första gången man trycker på en operator
             {
                 equals();
-                updateDisplayOperand = true;
-                //skriv result nu
+                updateDisplayOperand = true; //Vill skriva ut operand eftersom det är resultatet från förra uträkningen
 
                 prevOperator = op;
                 operand = result;
                 result = 0;
                 Console.WriteLine(result);
             }
-            else
+            else //Man trycker på en operatör för första gången
             {
                 prevOperator = op;
                 operand = result;
                 result = 0;
             }
             latestPress = "op";
-            /*
-            Console.WriteLine(numberCalc2 + " " + numberString2);
-            if (operattor == "None")
-                operattor = op;
-
-
-            if (numberString2 != "" && numberString2 != "0")
-            {
-                equals();
-                updateNumber2Display();
-                updateDisplay();
-            }
-
-            operattor = op;
-
-            numberString2 = numberString1;
-            numberString1 = "0";
-            updateNumber2Display();
-
-    */
+           
         }
 
         public void clearAll()
