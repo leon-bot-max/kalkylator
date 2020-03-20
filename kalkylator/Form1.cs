@@ -10,14 +10,7 @@ using System.Windows.Forms;
 
 
 
-/*
- ---------Att Göra------------------------
- 0, <---?
- alla knappar
-     
-     
-     
- */
+
 namespace kalkylator
 {
     public partial class Form1 : Form
@@ -26,31 +19,22 @@ namespace kalkylator
 
 
         Calculator calc = new Calculator();
-        //double numberCalc1 = 0;
         string resultString = "";
-        //double numberCalc2 = 0;
         string operandString = "";
-        //string operattor = "None";
-        //bool latestPressEqual = false;
-        //double latestNumber = 0;
-        //bool waitingForNum = true;
+
+        bool lastPressedNum = false;
+    
 
         public Form1()
         {
             InitializeComponent();
-
-            //display.SelectionAlignment = HorizontalAlignment.Right;
-
-
-            //numberString1 = numberCalc1.ToString();
             display.Text = resultString;
-
-
             display.SelectionAlignment = HorizontalAlignment.Right;
         }
 
         private void numberButtonListener(object sender, EventArgs e)
         {
+            lastPressedNum = true;
             //latestPressEqual = false;
             if (calc.latestPress == "eq")   //Ta väck nuvarande operator
             {
@@ -85,6 +69,8 @@ namespace kalkylator
             if (sender == buttonDel)
             {
                 raderaTal();
+                lastPressedNum = false;
+
             }
             else if (sender == buttonComma)
             {
@@ -95,33 +81,51 @@ namespace kalkylator
                     Console.WriteLine(resultString);
                     updateDisplay();
                     updateNumber2Display();
+                    lastPressedNum = false;
+
                     return;
                 }
+                lastPressedNum = false;
+
             }
             else if (sender == buttonPlus)
             {
-                calc.operatorPressed('+');
+                calc.operatorPressed('+', !lastPressedNum);
+                lastPressedNum = false;
 
             }
             else if (sender == buttonDiv)
             {
-                calc.operatorPressed('/');
+                calc.operatorPressed('/', !lastPressedNum);
+                lastPressedNum = false;
+
             }
             else if (sender == buttonMin)
             {
-                calc.operatorPressed('-');
+                calc.operatorPressed('-', !lastPressedNum);
+                lastPressedNum = false;
+
             }
             else if (sender == buttonMult)
             {
-                calc.operatorPressed('*');
+                calc.operatorPressed('*', !lastPressedNum);
+                lastPressedNum = false;
+
             }
             else if (sender == buttonEquals)
             {
+                if (!lastPressedNum && calc.latestPress != "eq" && calc.prevOperator != new char()) //Om man trycker lika med efter tryckt på t.ex / ska man dividera med talet själv
+                {
+                    calc.result = calc.operand;
+                }
                 calc.equals();
+                Console.WriteLine("result " + " " + calc.result);
                 konverteraTillString();
                 updateDisplay();
                 updateNumber2Display();
                 resultString = "0";
+                lastPressedNum = false;
+
                 return;
 
             }
@@ -131,6 +135,8 @@ namespace kalkylator
                 konverteraTillString();
                 updateDisplay();
                 updateNumber2Display();
+                lastPressedNum = false;
+
             }
             else if (sender == buttonCE) //Clear det du skriver på nu
             {
@@ -138,6 +144,8 @@ namespace kalkylator
                 konverteraTillString();
                 updateDisplay();
                 updateNumber2Display();
+                lastPressedNum = false;
+
             }
             else if (sender == buttonInverse)
             {
@@ -163,7 +171,6 @@ namespace kalkylator
             {
                 calc.sqrt();
                 konverteraTillString();
-
                 updateDisplay();
             }
             konverteraTillString();
@@ -173,9 +180,14 @@ namespace kalkylator
                 updateDisplay(true);
                 calc.updateDisplayOperand = false;
             }
+            Console.WriteLine("result " + " " + calc.result);
 
             //updateDisplay();
+            //konverteraTillString();
+            //updateDisplay();
+            konverteraTillString();
             updateNumber2Display();
+
 
         }
  
@@ -252,6 +264,10 @@ namespace kalkylator
 
         private void updateDisplay(bool withOperand = false)
         {
+
+            //konverteraTillString();
+
+
             string attSkriva = resultString;
             if (withOperand)
             {
@@ -273,6 +289,7 @@ namespace kalkylator
 
         private void updateNumber2Display()
         {
+            //konverteraTillString();
             number2Display.Text = operandString + " " + calc.prevOperator;
         }
 

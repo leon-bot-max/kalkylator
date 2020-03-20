@@ -67,11 +67,18 @@ namespace kalkylator
 
         }
 
-        public void operatorPressed(char op)
+        public void operatorPressed(char op, bool changeOperator = false)
         {
             //1 + 1 +2 -3s
             Console.WriteLine(result + " " + prevOperator + " " + operand);
 
+            if (changeOperator)
+            {
+                prevOperator = op;
+                latestPress = "op";
+
+                return;
+            }
 
             if (latestPress == "op") // inte första gången man trycker på en operator
             {
@@ -113,6 +120,7 @@ namespace kalkylator
             if (result != 0)
             {
                 result = 1 / result;
+
             }
             else
             {
