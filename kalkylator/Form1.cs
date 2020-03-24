@@ -22,8 +22,8 @@ namespace kalkylator
         string resultString = "";
         string operandString = "";
 
-        bool lastPressedNum = false;
-    
+        bool lastPressedOperator = false;
+        bool replaceCurrentNum = true;
 
         public Form1()
         {
@@ -34,7 +34,7 @@ namespace kalkylator
 
         private void numberButtonListener(object sender, EventArgs e)
         {
-            lastPressedNum = true;
+            lastPressedOperator = false;
             //latestPressEqual = false;
             if (calc.latestPress == "eq")   //Ta väck nuvarande operator
             {
@@ -69,7 +69,7 @@ namespace kalkylator
             if (sender == buttonDel)
             {
                 raderaTal();
-                lastPressedNum = false;
+                lastPressedOperator = false;
 
             }
             else if (sender == buttonComma)
@@ -81,50 +81,55 @@ namespace kalkylator
                     Console.WriteLine(resultString);
                     updateDisplay();
                     updateNumber2Display();
-                    lastPressedNum = false;
+                    lastPressedOperator = false;
 
                     return;
                 }
-                lastPressedNum = false;
+                lastPressedOperator = false;
 
             }
             else if (sender == buttonPlus)
             {
-                calc.operatorPressed('+', !lastPressedNum);
-                lastPressedNum = false;
+                calc.operatorPressed('+', lastPressedOperator);
+                replaceCurrentNum = true;
+                lastPressedOperator = true;
 
             }
             else if (sender == buttonDiv)
             {
-                calc.operatorPressed('/', !lastPressedNum);
-                lastPressedNum = false;
+                calc.operatorPressed('/', lastPressedOperator);
+                replaceCurrentNum = true;
+                lastPressedOperator = true;
 
             }
             else if (sender == buttonMin)
             {
-                calc.operatorPressed('-', !lastPressedNum);
-                lastPressedNum = false;
+                calc.operatorPressed('-', lastPressedOperator);
+                replaceCurrentNum = true;
+                lastPressedOperator = true;
 
             }
             else if (sender == buttonMult)
             {
-                calc.operatorPressed('*', !lastPressedNum);
-                lastPressedNum = false;
+                calc.operatorPressed('*', lastPressedOperator);
+                replaceCurrentNum = true;
+                lastPressedOperator = true;
 
             }
             else if (sender == buttonEquals)
             {
-                if (!lastPressedNum && calc.latestPress != "eq" && calc.prevOperator != new char()) //Om man trycker lika med efter tryckt på t.ex / ska man dividera med talet själv
-                {
-                    calc.result = calc.operand;
-                }
+                //if (lastPressedOperator && calc.latestPress != "eq" && calc.prevOperator != new char()) //Om man trycker lika med efter tryckt på t.ex / ska man dividera med talet själv
+                //{
+                //    calc.result = calc.operand;
+                //}
                 calc.equals();
                 Console.WriteLine("result " + " " + calc.result);
                 konverteraTillString();
                 updateDisplay();
                 updateNumber2Display();
-                resultString = "0";
-                lastPressedNum = false;
+                replaceCurrentNum = true;
+                //resultString = "0";
+                lastPressedOperator = false;
 
                 return;
 
@@ -135,7 +140,7 @@ namespace kalkylator
                 konverteraTillString();
                 updateDisplay();
                 updateNumber2Display();
-                lastPressedNum = false;
+                lastPressedOperator = false;
 
             }
             else if (sender == buttonCE) //Clear det du skriver på nu
@@ -144,7 +149,7 @@ namespace kalkylator
                 konverteraTillString();
                 updateDisplay();
                 updateNumber2Display();
-                lastPressedNum = false;
+                lastPressedOperator = false;
 
             }
             else if (sender == buttonInverse)
@@ -227,9 +232,9 @@ namespace kalkylator
 
             }
 
-            if (resultString == "0")
+            if (resultString == "0" || replaceCurrentNum)
             {
-
+                replaceCurrentNum = false;
                 resultString = tal;
                 koverteraTillResult();
                 return;

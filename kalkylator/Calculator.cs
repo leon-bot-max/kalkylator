@@ -71,15 +71,15 @@ namespace kalkylator
         {
             //1 + 1 +2 -3s
             Console.WriteLine(result + " " + prevOperator + " " + operand);
+            Console.WriteLine("Latest oress: " + latestPress + " co: " + changeOperator);
 
-            if (changeOperator)
-            {
+            if (changeOperator && latestPress != "eq") //Kolla om den ända förändringen är att byta operator. Detta är inte fallet om man senast
+            {                                          //tryckt på "=" eftersom om man trycker på en operator efter det vill man setta en ny
                 prevOperator = op;
                 latestPress = "op";
 
                 return;
             }
-
             if (latestPress == "op") // inte första gången man trycker på en operator
             {
                 equals();
@@ -87,14 +87,15 @@ namespace kalkylator
 
                 prevOperator = op;
                 operand = result;
-                result = 0;
+                //result = 0;
                 Console.WriteLine(result);
             }
+
             else //Man trycker på en operatör för första gången
             {
                 prevOperator = op;
                 operand = result;
-                result = 0;
+                //result = 0;
             }
             latestPress = "op";
            
