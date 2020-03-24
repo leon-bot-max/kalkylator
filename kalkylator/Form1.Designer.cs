@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.display = new System.Windows.Forms.RichTextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
@@ -54,20 +53,8 @@
             this.buttonComma = new System.Windows.Forms.Button();
             this.buttonPlus = new System.Windows.Forms.Button();
             this.number2Display = new System.Windows.Forms.Label();
+            this.display = new System.Windows.Forms.RichTextBox();
             this.SuspendLayout();
-            // 
-            // display
-            // 
-            this.display.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.display.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.display.Font = new System.Drawing.Font("Comic Sans MS", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.display.ForeColor = System.Drawing.SystemColors.Window;
-            this.display.Location = new System.Drawing.Point(25, 32);
-            this.display.Name = "display";
-            this.display.ReadOnly = true;
-            this.display.Size = new System.Drawing.Size(294, 84);
-            this.display.TabIndex = 0;
-            this.display.Text = "Test";
             // 
             // button1
             // 
@@ -424,6 +411,21 @@
             this.number2Display.TabIndex = 24;
             this.number2Display.Text = "number2";
             // 
+            // display
+            // 
+            this.display.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.display.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.display.Font = new System.Drawing.Font("Comic Sans MS", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.display.ForeColor = System.Drawing.SystemColors.Window;
+            this.display.Location = new System.Drawing.Point(25, 32);
+            this.display.Name = "display";
+            this.display.ReadOnly = true;
+            this.display.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Horizontal;
+            this.display.Size = new System.Drawing.Size(294, 84);
+            this.display.TabIndex = 0;
+            this.display.Text = "Test";
+            this.display.WordWrap = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -487,8 +489,8 @@
         private System.Windows.Forms.Button button0;
         private System.Windows.Forms.Button buttonComma;
         private System.Windows.Forms.Button buttonPlus;
-        public System.Windows.Forms.RichTextBox display;
         private System.Windows.Forms.Label number2Display;
+        public System.Windows.Forms.RichTextBox display;
     }
 }
 

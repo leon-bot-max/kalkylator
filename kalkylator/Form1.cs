@@ -10,7 +10,6 @@ using System.Windows.Forms;
 
 
 
-
 namespace kalkylator
 {
     public partial class Form1 : Form
@@ -270,9 +269,14 @@ namespace kalkylator
         {
 
             //konverteraTillString();
-
+            //int maxLängd = 10;
 
             string attSkriva = resultString;
+
+            //if (attSkriva.Length > maxLängd)
+            //{
+            //    attSkriva = attSkriva.Substring(0, maxLängd) + "...";
+            //}
             if (withOperand)
             {
                 attSkriva = operandString;
@@ -286,8 +290,11 @@ namespace kalkylator
                 calc.clearAll();
                 return;
             }
+
             display.Text = attSkriva;
             display.SelectionAlignment = HorizontalAlignment.Right;
+
+            
 
         }
 

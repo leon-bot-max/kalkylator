@@ -12,11 +12,11 @@ namespace kalkylator
         public double result = 0;
         public double operand = 0;
         public char prevOperator = new char();
-        public string latestPress = ""; //eq = equal, op = operator, num = number
+        public string latestPress = ""; //eq = equal, op = operator, kolla bara senast tryck om man ignorerar nummber och 1/x osv.
         public double temp = 0;
 
         public bool error = false;
-        public bool updateDisplayOperand = false;
+        public bool updateDisplayOperand = false;  //När man trycker en operator många gånger visas resultatet från förra i operand
         public void equals()
         {
             Console.WriteLine(result + " " + prevOperator + " " + operand);
