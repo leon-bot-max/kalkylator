@@ -19,8 +19,8 @@ namespace kalkylator
 
 
         Calculator calc = new Calculator();
-        string resultString = "";
-        string operandString = "";
+        string resultString = "0";
+        string operandString = "0";
 
         bool lastPressedOperator = false;
         bool replaceCurrentNum = true;
@@ -118,17 +118,13 @@ namespace kalkylator
             }
             else if (sender == buttonEquals)
             {
-                //if (lastPressedOperator && calc.latestPress != "eq" && calc.prevOperator != new char()) //Om man trycker lika med efter tryckt på t.ex / ska man dividera med talet själv
-                //{
-                //    calc.result = calc.operand;
-                //}
+
                 calc.equals();
-                Console.WriteLine("result " + " " + calc.result);
+                Console.WriteLine(calc.result + " " + calc.operand);
                 konverteraTillString();
                 updateDisplay();
                 updateNumber2Display();
                 replaceCurrentNum = true;
-                //resultString = "0";
                 lastPressedOperator = false;
 
                 return;
@@ -223,10 +219,13 @@ namespace kalkylator
         }
         private void nyttTal(string tal)
         {
-            if (tal == "," && resultString == "")
+            if (tal == ",")
             {
-
-                resultString += "0" + tal;
+                if (resultString == "")
+                {
+                    resultString = "0";
+                }
+                resultString += tal;
                 koverteraTillResult();
                 return;
 
@@ -295,6 +294,12 @@ namespace kalkylator
         private void updateNumber2Display()
         {
             //konverteraTillString();
+            if (calc.latestPress == "eq") //Om man senast tryckte lika med visar display2 hur talet i rutan kommer förändras
+            {
+                number2Display.Text = calc.prevOperator  + " " + operandString;
+                return;
+
+            }
             number2Display.Text = operandString + " " + calc.prevOperator;
         }
 
