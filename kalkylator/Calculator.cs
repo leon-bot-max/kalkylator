@@ -87,7 +87,6 @@ namespace kalkylator
                 currentOperator = op;
                 operand = result;
 
-                updateDisplayOperand = true; //Vill skriva ut operand eftersom det är resultatet från förra uträkningen
 
             }
 

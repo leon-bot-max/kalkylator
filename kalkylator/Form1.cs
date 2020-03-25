@@ -136,12 +136,6 @@ namespace kalkylator
             replaceCurrentNum = true;
             lastPressedOperator = true;
 
-            if (calc.updateDisplayOperand) //Fall man trycker på operator många gånger är svaret från förra uträkning i operand
-            {
-                updateDisplay(true);
-                calc.updateDisplayOperand = false;
-            }
-
             konverteraTillString();
             updateDisplay();
             updateNumber2Display();
@@ -219,7 +213,7 @@ namespace kalkylator
             updateNumber2Display();
         }
 
-        private void updateDisplay(bool withOperand = false)
+        private void updateDisplay()
         {
 
             
@@ -232,10 +226,7 @@ namespace kalkylator
                 attSkriva = attSkriva.Substring(0, maxLängd) + "...";
             }
             */
-            if (withOperand)
-            {
-                attSkriva = operandString;
-            }
+
 
             if (calc.error == true) //Visa att det är en error
             {
