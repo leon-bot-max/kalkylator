@@ -18,9 +18,9 @@ namespace kalkylator
         public bool error = false;
         public void equals()
         {
-            if (latestPress != "eq" && currentOperator != new char()) //Om man trycker på "=" första gågnen ska result = operand, och operand = result
-            {                                                         // eftersom result är det senaste man skrev in och det som står på displayn
-                temp = result;
+            if (latestPress != "eq" && currentOperator != new char()) //Om man trycker på "=" första gången ska result = operand, och operand = result
+            {                                                         // eftersom result är det senaste man skrev in 
+                temp = result;                                         //och operand var det första man skrev in
                 result = operand;
                 operand = temp;
             }
@@ -71,7 +71,7 @@ namespace kalkylator
             }
 
             if (latestPress == "op") // inte första gången man trycker på en operator, man har t.ex. tryckt "5 + 5 + "
-                equals(); //Räknar ut det man tryckte in innan t.ex 5+5, result = 10
+                equals(); //Räknar ut det man tryckte in innan, i exemplet 5+5, result = 10
 
 
             
