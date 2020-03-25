@@ -414,7 +414,6 @@
             // display
             // 
             this.display.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.display.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.display.Font = new System.Drawing.Font("Comic Sans MS", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.display.ForeColor = System.Drawing.SystemColors.Window;
             this.display.Location = new System.Drawing.Point(25, 32);

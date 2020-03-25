@@ -16,7 +16,6 @@ namespace kalkylator
         public double temp = 0;
 
         public bool error = false;
-        public bool updateDisplayOperand = false;  //När man trycker en operator många gånger visas resultatet från förra i operand
         public void equals()
         {
             if (latestPress != "eq" && currentOperator != new char()) //Om man trycker på "=" första gågnen ska result = operand, och operand = result

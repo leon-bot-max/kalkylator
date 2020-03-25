@@ -22,7 +22,7 @@ namespace kalkylator
         string operandString = "0"; // string av operand i calc
 
         bool lastPressedOperator = false;
-        bool replaceCurrentNum = true; //Numret som står i resulString ska bytas ut om en siffra trycks
+        bool replaceCurrentNum = true; //Numret som står i resultString ska bytas ut om en siffra trycks
 
         public Form1()
         {
@@ -35,8 +35,6 @@ namespace kalkylator
         {
             lastPressedOperator = false;
 
-
-
             Button senderButton = (Button)sender;
             nyttTal(senderButton.Text);
             updateDisplay();
@@ -45,13 +43,7 @@ namespace kalkylator
 
         private void mathButtonListener(object sender, EventArgs e)
         {
-
-
-
-
             Button senderButton = (Button)sender;
-
-
 
             if (sender == buttonDel)
             {
@@ -122,6 +114,7 @@ namespace kalkylator
             {
                 calc.sqrt();
             }
+
             lastPressedOperator = false;
             konverteraTillString();
             updateDisplay();
@@ -202,7 +195,7 @@ namespace kalkylator
                     newNumberString += arrayNumbers[i];
                 }
 
-                if (newNumberString == "")
+                if (newNumberString == "")//Om man tar väck alla siffror ska siffran vara 0
                 {
                     newNumberString = "0";
                 }
@@ -215,11 +208,10 @@ namespace kalkylator
 
         private void updateDisplay()
         {
-
-            
-
             string attSkriva = resultString;
-            /*
+
+
+            /* Om talet inte får plats på skärmen kan användaren skrolla
             int maxLängd = 10;
             if (attSkriva.Length > maxLängd)
             {
@@ -256,6 +248,7 @@ namespace kalkylator
                 number2Display.Text = "x " + calc.currentOperator + " " + operandString;
                 return;
             }
+
             number2Display.Text = operandString + " " + calc.currentOperator;
         }
 
