@@ -19,17 +19,12 @@ namespace kalkylator
         public bool updateDisplayOperand = false;  //När man trycker en operator många gånger visas resultatet från förra i operand
         public void equals()
         {
-            Console.WriteLine(result + " " + currentOperator + " " + operand);
-            if (latestPress != "eq" && currentOperator != new char())
-            {
+            if (latestPress != "eq" && currentOperator != new char()) //Om man trycker på "=" första gågnen ska result = operand, och operand = result
+            {                                                         // eftersom result är det senaste man skrev in och det som står på displayn
                 temp = result;
                 result = operand;
                 operand = temp;
-                Console.WriteLine("temp = result");
             }
-
-
-            Console.WriteLine(result + " " + currentOperator + " " + operand);
 
 
             switch (currentOperator)
@@ -44,9 +39,8 @@ namespace kalkylator
                     result -= operand;// - result;
                     break;
                 case '/':
-                    if (operand == 0)
+                    if (operand == 0)  //Man kan inte dividera med 0
                     {
-                        Console.WriteLine("Div by zero");
                         error = true;
                     }
                     else
@@ -62,16 +56,9 @@ namespace kalkylator
 
         }
 
-        public void operate()
-        {
-
-        }
 
         public void operatorPressed(char op, bool changeOperator = false)
         {
-            //1 + 1 +2 -3s
-            Console.WriteLine(result + " " + currentOperator + " " + operand);
-            Console.WriteLine("Latest oress: " + latestPress + " co: " + changeOperator);
 
             if (changeOperator)//Kolla om den ända förändringen är att byta operator. 
             { 
@@ -80,21 +67,15 @@ namespace kalkylator
                 return;
             }
 
-            if (latestPress == "op") // inte första gången man trycker på en operator
-            {
-                equals();
-
-                currentOperator = op;
-                operand = result;
+            if (latestPress == "op") // inte första gången man trycker på en operator, man har t.ex. trcyket "5 + 5 + "
+                equals(); //Räknar ut det man tryckte in innan t.ex 5+5, result = 10
 
 
-            }
-
-            else //Man trycker på en operatör för första gången
-            {
-                currentOperator = op;
-                operand = result;
-            }
+            
+            currentOperator = op;
+            operand = result; //Result är antingen det som stod på skärmen eller det som räknades ut av equals om latestPress = "op"
+                              //och sparas i operand så att nytt tal kan skrivas in
+            
             latestPress = "op";
            
         }

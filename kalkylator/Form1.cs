@@ -245,13 +245,13 @@ namespace kalkylator
 
         private void updateNumber2Display()
         {
-            if (calc.currentOperator == new char())
+            if (calc.currentOperator == new char()) //Om ingen operator är vald visar display2 inget
             {
                 number2Display.Text = "";
                 return;
             }
                 
-            if (calc.latestPress == "eq") //Om man senast tryckte lika med visar display2 hur talet i rutan kommer förändras
+            if (calc.latestPress == "eq") //Om man senast tryckte '=' visar display2 hur talet i rutan kommer förändras om man trycker igen
             {
                 number2Display.Text = "x " + calc.currentOperator + " " + operandString;
                 return;
