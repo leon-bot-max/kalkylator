@@ -11,7 +11,7 @@ namespace kalkylator
 
         public double result = 0;
         public double operand = 0;
-        public char prevOperator = new char();
+        public char currentOperator = new char();
         public string latestPress = ""; //eq = equal, op = operator, kolla bara senast tryck om man ignorerar nummber och 1/x osv.
         public double temp = 0;
 
@@ -19,8 +19,8 @@ namespace kalkylator
         public bool updateDisplayOperand = false;  //När man trycker en operator många gånger visas resultatet från förra i operand
         public void equals()
         {
-            Console.WriteLine(result + " " + prevOperator + " " + operand);
-            if (latestPress != "eq" && prevOperator != new char())
+            Console.WriteLine(result + " " + currentOperator + " " + operand);
+            if (latestPress != "eq" && currentOperator != new char())
             {
                 temp = result;
                 result = operand;
@@ -29,10 +29,10 @@ namespace kalkylator
             }
 
 
-            Console.WriteLine(result + " " + prevOperator + " " + operand);
+            Console.WriteLine(result + " " + currentOperator + " " + operand);
 
 
-            switch (prevOperator)
+            switch (currentOperator)
             {
                 case '*':
                     result *= operand;// * result;
@@ -70,32 +70,31 @@ namespace kalkylator
         public void operatorPressed(char op, bool changeOperator = false)
         {
             //1 + 1 +2 -3s
-            Console.WriteLine(result + " " + prevOperator + " " + operand);
+            Console.WriteLine(result + " " + currentOperator + " " + operand);
             Console.WriteLine("Latest oress: " + latestPress + " co: " + changeOperator);
 
-            if (changeOperator && latestPress != "eq") //Kolla om den ända förändringen är att byta operator. Detta är inte fallet om man senast
-            {                                          //tryckt på "=" eftersom om man trycker på en operator efter det vill man setta en ny
-                prevOperator = op;
+            if (changeOperator)//Kolla om den ända förändringen är att byta operator. 
+            { 
+                currentOperator = op;
                 latestPress = "op";
-
                 return;
             }
+
             if (latestPress == "op") // inte första gången man trycker på en operator
             {
                 equals();
+
+                currentOperator = op;
+                operand = result;
+
                 updateDisplayOperand = true; //Vill skriva ut operand eftersom det är resultatet från förra uträkningen
 
-                prevOperator = op;
-                operand = result;
-                //result = 0;
-                Console.WriteLine(result);
             }
 
             else //Man trycker på en operatör för första gången
             {
-                prevOperator = op;
+                currentOperator = op;
                 operand = result;
-                //result = 0;
             }
             latestPress = "op";
            
@@ -105,7 +104,7 @@ namespace kalkylator
         {
             result = 0;
             operand = 0;
-            prevOperator = new char();
+            currentOperator = new char();
             latestPress = "";
             temp = 0;
             error = false;
@@ -121,10 +120,9 @@ namespace kalkylator
             if (result != 0)
             {
                 result = 1 / result;
-
             }
             else
-            {
+            { //Kan inte dividera med 0
                 error = true;
             }
         }
@@ -137,7 +135,7 @@ namespace kalkylator
 
         public void sqrt()
         {
-            if (result < 0)
+            if (result < 0)  //Kan inte ta roten ur negativa tal
             {
                 error = true;
                 return;

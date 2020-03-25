@@ -18,32 +18,25 @@ namespace kalkylator
 
 
         Calculator calc = new Calculator();
-        string resultString = "0";
-        string operandString = "0";
+        string resultString = "0";  //string av result i calc
+        string operandString = "0"; // string av operand i calc
 
         bool lastPressedOperator = false;
-        bool replaceCurrentNum = true;
+        bool replaceCurrentNum = true; //Numret som står i resulString ska bytas ut om en siffra trycks
 
         public Form1()
         {
             InitializeComponent();
-            display.Text = resultString;
-            display.SelectionAlignment = HorizontalAlignment.Right;
+            updateDisplay();
+            updateNumber2Display();
         }
 
         private void numberButtonListener(object sender, EventArgs e)
         {
             lastPressedOperator = false;
-            //latestPressEqual = false;
-            if (calc.latestPress == "eq")   //Ta väck nuvarande operator
-            {
-                Console.WriteLine("eq was katest");
-                calc.prevOperator = new char();
-                calc.operand = 0;
-            }
 
 
-            //calc.latestPress = "num";
+
             Button senderButton = (Button)sender;
             nyttTal(senderButton.Text);
             updateDisplay();
@@ -58,157 +51,105 @@ namespace kalkylator
 
             Button senderButton = (Button)sender;
 
-            /*
-            if (senderButton != buttonEquals)
-            {
-                latestPressEqual = false;
-            }
-            */
+
 
             if (sender == buttonDel)
             {
                 raderaTal();
-                lastPressedOperator = false;
-
             }
             else if (sender == buttonComma)
             {
                 if (!resultString.Contains(","))
                 {
                     nyttTal(",");
-                    updateDisplay(false);
-                    Console.WriteLine(resultString);
-                    //updateDisplay();
-                    updateNumber2Display();
-                    lastPressedOperator = false;
-
-                    return;
+                    updateDisplay();
+                    updateNumber2Display();                 
                 }
                 lastPressedOperator = false;
-                return;
-
+                return; //Gå ut ur funktion efter man inte vill kovertera till string. Då skulle kommatecknet försvinna
             }
             else if (sender == buttonPlus)
             {
-                calc.operatorPressed('+', lastPressedOperator);
-                replaceCurrentNum = true;
-                lastPressedOperator = true;
-
+                operatorPress('+');
+                return;  //hoppa ut från funnktion efter varje operator eftersom lastPressedOperator blir false annars
             }
             else if (sender == buttonDiv)
             {
-                calc.operatorPressed('/', lastPressedOperator);
-                replaceCurrentNum = true;
-                lastPressedOperator = true;
-
+                operatorPress('/');
+                return;
             }
             else if (sender == buttonMin)
             {
-                calc.operatorPressed('-', lastPressedOperator);
-                replaceCurrentNum = true;
-                lastPressedOperator = true;
-
+                operatorPress('-');
+                return;
             }
             else if (sender == buttonMult)
             {
-                calc.operatorPressed('*', lastPressedOperator);
-                replaceCurrentNum = true;
-                lastPressedOperator = true;
-
+                operatorPress('*');
+                return;
             }
             else if (sender == buttonEquals)
             {
-
                 calc.equals();
-                Console.WriteLine(calc.result + " " + calc.operand);
-               // konverteraTillString();
-                //updateDisplay();
-                //updateNumber2Display();
                 replaceCurrentNum = true;
-                lastPressedOperator = false;
-
-                //return;
-
             }
             else if (sender == buttonC) //Clear all
             {
                 calc.clearAll();
-                //konverteraTillString();
-                //updateDisplay();
-                //updateNumber2Display();
-                lastPressedOperator = false;
-
             }
-            else if (sender == buttonCE) //Clear det du skriver på nu
+            else if (sender == buttonCE) //Clear på det du skriver på nu
             {
                 calc.clearEntry();
-                //konverteraTillString();
-                //updateDisplay();
-                //updateNumber2Display();
-                lastPressedOperator = false;
-
+                konverteraTillString();
+                updateDisplay();
+                updateNumber2Display();
+                lastPressedOperator = true;
+                return; //Return efter som man inte vill ändra  lastPressedOperator till false
             }
             else if (sender == buttonInverse)
             {
                 calc.inverse();
-                //konverteraTillString();
-                //updateDisplay();
-                //updateNumber2Display();
-                lastPressedOperator = false;
-
             }
             else if (sender == buttonProcent)
             {
                 calc.procent();
-                //konverteraTillString();
-                //updateDisplay();
-                lastPressedOperator = false;
-
             }
             else if (sender == buttonPlusMinus)
             {
                 calc.teckenByte();
-                //konverteraTillString();
-
-                //updateDisplay();
-                lastPressedOperator = false;
-
             }
             else if (sender == buttonSqrt)
             {
                 calc.sqrt();
-                //konverteraTillString();
-                //updateDisplay();
-                lastPressedOperator = false;
-
             }
-            //konverteraTillString();
-            if (calc.updateDisplayOperand)
-            {
-                Console.WriteLine("calc.update " + calc.result + " operand: " + calc.operand);
-                updateDisplay(true);
-                calc.updateDisplayOperand = false;
-            }
-            Console.WriteLine("result " + " " + calc.result);
-
-            //updateDisplay();
-            //konverteraTillString();
-            //updateDisplay();
-            //konverteraTillString();
+            lastPressedOperator = false;
             konverteraTillString();
             updateDisplay();
             updateNumber2Display();
 
-
         }
  
+
+        private void operatorPress(char op)
+        {
+            calc.operatorPressed(op, lastPressedOperator);
+            replaceCurrentNum = true;
+            lastPressedOperator = true;
+
+            if (calc.updateDisplayOperand) //Fall man trycker på operator många gånger är svaret från förra uträkning i operand
+            {
+                updateDisplay(true);
+                calc.updateDisplayOperand = false;
+            }
+
+            konverteraTillString();
+            updateDisplay();
+            updateNumber2Display();
+        }
         private void konverteraTillString()
         {
-            
             resultString = calc.result.ToString();
             operandString = calc.operand.ToString();
-            Console.WriteLine("Till string");
-
         }
 
 
@@ -216,10 +157,8 @@ namespace kalkylator
         {
             if (resultString[resultString.Length - 1] == ',')
             {
-                Console.WriteLine(resultString + "  --<-<- resultString innan +0");
-                string r = resultString + "0";
+                string r = resultString + "0";  //om det t.ex står 5, ändras det til 5,0
                 calc.result = double.Parse(r);
-                Console.WriteLine("Efter parse: " + double.Parse(r));
             }
             else
                 calc.result = double.Parse(resultString);
@@ -231,17 +170,17 @@ namespace kalkylator
         {
             if (tal == ",")
             {
-                if (resultString == "")
+                if (resultString == "" || replaceCurrentNum) //Det ska i detta fall skrivas 0,
                 {
+                    replaceCurrentNum = false;
                     resultString = "0";
                 }
                 resultString += tal;
                 koverteraTillResult();
                 return;
-
             }
 
-            if (resultString == "0" || replaceCurrentNum)
+            if (resultString == "0" || replaceCurrentNum)  //Resulstring ska helt bytas till tal
             {
                 replaceCurrentNum = false;
                 resultString = tal;
@@ -254,50 +193,52 @@ namespace kalkylator
         }
         private void raderaTal()
         {
-            char[] arrayNumbers = resultString.ToCharArray();
-            string newNumberString = "";
+            if (replaceCurrentNum) //Om man trycker radera ett tal och hela talet ska replacas tas hela talet väck
+            {
+                resultString = "0";
+                replaceCurrentNum = false;
+            }
+            else
+            {
+                char[] arrayNumbers = resultString.ToCharArray();
+                string newNumberString = "";
 
-            for (int i = 0; i < arrayNumbers.Length - 1; i++)
-            {
-                newNumberString += arrayNumbers[i];
+                for (int i = 0; i < arrayNumbers.Length - 1; i++) //Lägger tillbaka alla siffror förutom den sista i result string
+                {
+                    newNumberString += arrayNumbers[i];
+                }
+
+                if (newNumberString == "")
+                {
+                    newNumberString = "0";
+                }
+                resultString = newNumberString;
             }
-            if (newNumberString == "")
-            {
-                newNumberString = "0";
-            }
-            resultString = newNumberString;
             koverteraTillResult();
-
             updateDisplay();
             updateNumber2Display();
-
-
-
-
         }
 
         private void updateDisplay(bool withOperand = false)
         {
-            
-                
 
-            //konverteraTillString();
-            //int maxLängd = 10;
+            
 
             string attSkriva = resultString;
-
-            //if (attSkriva.Length > maxLängd)
-            //{
-            //    attSkriva = attSkriva.Substring(0, maxLängd) + "...";
-            //}
+            /*
+            int maxLängd = 10;
+            if (attSkriva.Length > maxLängd)
+            {
+                attSkriva = attSkriva.Substring(0, maxLängd) + "...";
+            }
+            */
             if (withOperand)
             {
                 attSkriva = operandString;
             }
 
-            if (calc.error == true)
+            if (calc.error == true) //Visa att det är en error
             {
-                Console.WriteLine("Error found");
                 display.Text = "Fel";
                 display.SelectionAlignment = HorizontalAlignment.Right;
                 calc.clearAll();
@@ -313,14 +254,18 @@ namespace kalkylator
 
         private void updateNumber2Display()
         {
-            //konverteraTillString();
+            if (calc.currentOperator == new char())
+            {
+                number2Display.Text = "";
+                return;
+            }
+                
             if (calc.latestPress == "eq") //Om man senast tryckte lika med visar display2 hur talet i rutan kommer förändras
             {
-                number2Display.Text = calc.prevOperator  + " " + operandString;
+                number2Display.Text = "x " + calc.currentOperator + " " + operandString;
                 return;
-
             }
-            number2Display.Text = operandString + " " + calc.prevOperator;
+            number2Display.Text = operandString + " " + calc.currentOperator;
         }
 
 
