@@ -76,15 +76,16 @@ namespace kalkylator
                 if (!resultString.Contains(","))
                 {
                     nyttTal(",");
-                    updateDisplay();
+                    updateDisplay(false);
                     Console.WriteLine(resultString);
-                    updateDisplay();
+                    //updateDisplay();
                     updateNumber2Display();
                     lastPressedOperator = false;
 
                     return;
                 }
                 lastPressedOperator = false;
+                return;
 
             }
             else if (sender == buttonPlus)
@@ -120,68 +121,68 @@ namespace kalkylator
 
                 calc.equals();
                 Console.WriteLine(calc.result + " " + calc.operand);
-                konverteraTillString();
-                updateDisplay();
-                updateNumber2Display();
+               // konverteraTillString();
+                //updateDisplay();
+                //updateNumber2Display();
                 replaceCurrentNum = true;
                 lastPressedOperator = false;
 
-                return;
+                //return;
 
             }
             else if (sender == buttonC) //Clear all
             {
                 calc.clearAll();
-                konverteraTillString();
-                updateDisplay();
-                updateNumber2Display();
+                //konverteraTillString();
+                //updateDisplay();
+                //updateNumber2Display();
                 lastPressedOperator = false;
 
             }
             else if (sender == buttonCE) //Clear det du skriver på nu
             {
                 calc.clearEntry();
-                konverteraTillString();
-                updateDisplay();
-                updateNumber2Display();
+                //konverteraTillString();
+                //updateDisplay();
+                //updateNumber2Display();
                 lastPressedOperator = false;
 
             }
             else if (sender == buttonInverse)
             {
                 calc.inverse();
-                konverteraTillString();
-                updateDisplay();
-                updateNumber2Display();
+                //konverteraTillString();
+                //updateDisplay();
+                //updateNumber2Display();
                 lastPressedOperator = false;
 
             }
             else if (sender == buttonProcent)
             {
                 calc.procent();
-                konverteraTillString();
-                updateDisplay();
+                //konverteraTillString();
+                //updateDisplay();
                 lastPressedOperator = false;
 
             }
             else if (sender == buttonPlusMinus)
             {
                 calc.teckenByte();
-                konverteraTillString();
+                //konverteraTillString();
 
-                updateDisplay();
+                //updateDisplay();
                 lastPressedOperator = false;
 
             }
             else if (sender == buttonSqrt)
             {
                 calc.sqrt();
-                konverteraTillString();
-                updateDisplay();
+                //konverteraTillString();
+                //updateDisplay();
                 lastPressedOperator = false;
 
             }
-            konverteraTillString();
+            //konverteraTillString();
             if (calc.updateDisplayOperand)
             {
                 Console.WriteLine("calc.update " + calc.result + " operand: " + calc.operand);
@@ -193,7 +194,9 @@ namespace kalkylator
             //updateDisplay();
             //konverteraTillString();
             //updateDisplay();
+            //konverteraTillString();
             konverteraTillString();
+            updateDisplay();
             updateNumber2Display();
 
 
@@ -275,6 +278,8 @@ namespace kalkylator
 
         private void updateDisplay(bool withOperand = false)
         {
+            
+                
 
             //konverteraTillString();
             //int maxLängd = 10;
