@@ -61,13 +61,17 @@ namespace kalkylator
         {
 
             if (changeOperator)//Kolla om den ända förändringen är att byta operator. 
-            { 
-                currentOperator = op;
+            {
+                if (currentOperator == op)  //Om man trycker på samma operator 2 gånger tar man bort den
+                    currentOperator = new char();
+                else
+                    currentOperator = op;
+
                 latestPress = "op";
                 return;
             }
 
-            if (latestPress == "op") // inte första gången man trycker på en operator, man har t.ex. trcyket "5 + 5 + "
+            if (latestPress == "op") // inte första gången man trycker på en operator, man har t.ex. tryckt "5 + 5 + "
                 equals(); //Räknar ut det man tryckte in innan t.ex 5+5, result = 10
 
 
