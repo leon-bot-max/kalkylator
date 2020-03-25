@@ -153,12 +153,16 @@ namespace kalkylator
                 konverteraTillString();
                 updateDisplay();
                 updateNumber2Display();
+                lastPressedOperator = false;
+
             }
             else if (sender == buttonProcent)
             {
                 calc.procent();
                 konverteraTillString();
                 updateDisplay();
+                lastPressedOperator = false;
+
             }
             else if (sender == buttonPlusMinus)
             {
@@ -166,12 +170,16 @@ namespace kalkylator
                 konverteraTillString();
 
                 updateDisplay();
+                lastPressedOperator = false;
+
             }
             else if (sender == buttonSqrt)
             {
                 calc.sqrt();
                 konverteraTillString();
                 updateDisplay();
+                lastPressedOperator = false;
+
             }
             konverteraTillString();
             if (calc.updateDisplayOperand)
